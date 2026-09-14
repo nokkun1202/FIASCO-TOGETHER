@@ -2153,6 +2153,12 @@ font-size: 23px;
 }
 }
 
+/* 초대받은 참가자(게스트)는 호스트 전용 왼쪽 사이드바를 보지 않는다. */
+body.guest-mode #sidebar,
+body.guest-mode #leftSidebarToggle {
+  display: none !important;
+}
+
 </style>
 
 </head>
@@ -5726,6 +5732,16 @@ positionSideToggleButtons();
 
 }
 
+function updateHostOnlySidebarVisibility() {
+const isGuest = multi.role === "guest";
+document.body.classList.toggle("guest-mode", isGuest);
+if (isGuest) {
+  const sidebar = document.getElementById("sidebar");
+  if (sidebar) sidebar.classList.remove("sidebar-open");
+}
+updateSidebarToggleUI();
+}
+
 function toggleSidebar() {
 
 const sidebar = document.getElementById("sidebar");
@@ -6034,6 +6050,7 @@ code = cleanRoomCode(code);
 if (!code) return;
 
 multi.role = "host";
+updateHostOnlySidebarVisibility();
 multi.roomCode = code;
 setMultiStatus(`방 ${code} · 서버 연결중`, "waiting");
 updateMultiButtons();
@@ -6120,6 +6137,7 @@ code = cleanRoomCode(code);
 if (!code) return;
 
 multi.role = "guest";
+updateHostOnlySidebarVisibility();
 multi.roomCode = code;
 setMultiStatus(`방 ${code} · 연결중`, "waiting");
 updateMultiButtons();
@@ -6287,11 +6305,22 @@ function autoStartMultiplayer() {
 const params = new URLSearchParams(location.search);
 const code = cleanRoomCode(params.get("room"));
 if (!code) {
+  multi.role = "offline";
+  updateHostOnlySidebarVisibility();
 setMultiStatus("로컬", "");
 updateMultiButtons();
 refreshMyCharacterSelect();
 return;
 }
+
+// URL에 방 코드가 있고 이 브라우저가 해당 방의 호스트 세션을 갖고 있지 않다면
+// 참가자 화면으로 먼저 처리해 왼쪽 호스트 전용 사이드바가 잠깐 나타나지 않게 한다.
+if (sessionStorage.getItem(MULTI_HOST_SESSION_PREFIX + code) === "1") {
+  multi.role = "host";
+} else {
+  multi.role = "guest";
+}
+updateHostOnlySidebarVisibility();
 
 multi.roomCode = code;
 updateMultiButtons();
@@ -6310,6 +6339,19 @@ startMultiGuest(code);
 ========================================================= */
 
 initializeState();
+
+// 초기 렌더링에서도 방 참가자는 왼쪽 호스트 전용 사이드바를 숨긴다.
+(() => {
+  const initialCode = cleanRoomCode(new URLSearchParams(location.search).get("room"));
+  if (initialCode && sessionStorage.getItem(MULTI_HOST_SESSION_PREFIX + initialCode) !== "1") {
+    multi.role = "guest";
+  } else if (initialCode) {
+    multi.role = "host";
+  } else {
+    multi.role = "offline";
+  }
+  updateHostOnlySidebarVisibility();
+})();
 
 renderAll();
 document.getElementById("sidebar")?.classList.add("sidebar-open");
