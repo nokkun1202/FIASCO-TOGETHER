@@ -3773,61 +3773,92 @@ if (targetZone || targetCenter) {
 function setupHeldDicePointerDragging(el) {
 
 if (!el || el.dataset.pointerDiceReady === "1") return;
-el.dataset.pointerDiceReady = "1";
 
+el.dataset.pointerDiceReady = "1";
 el.draggable = true;
 
 el.addEventListener("pointerdown", event => {
 
-	if (event.pointerType === "mouse" && event.button !== 0) return;
+    if (event.pointerType === "mouse" && event.button !== 0) return;
 
-	const dieId = el.dataset.dieId;
-	if (!dieId) return;
+    const dieId = el.dataset.dieId;
+    if (!dieId) return;
 
-	activeHeldDiceDrag = {
-		el,
-		dieId,
-		pointerId: event.pointerId
-	};
+    activeHeldDiceDrag = {
+        el,
+        dieId,
+        pointerId: event.pointerId,
+        startX: event.clientX,
+        startY: event.clientY,
+        moved: false
+    };
 
-	el.classList.add("dragging-die");
-	document.body.classList.add("dice-pointer-dragging");
+    el.classList.add("dragging-die");
+    document.body.classList.add("dice-pointer-dragging");
 
-	try {
-		el.setPointerCapture(event.pointerId);
-	} catch {}
+    try {
+        el.setPointerCapture(event.pointerId);
+    } catch {}
 
-	event.preventDefault();
-	event.stopPropagation();
+    event.preventDefault();
+    event.stopPropagation();
+
+}, { passive: false });
+
+el.addEventListener("pointermove", event => {
+
+    if (!activeHeldDiceDrag || activeHeldDiceDrag.el !== el) return;
+
+    const drag = activeHeldDiceDrag;
+
+    const dx = event.clientX - drag.startX;
+    const dy = event.clientY - drag.startY;
+
+    if (Math.hypot(dx, dy) >= 6) {
+        drag.moved = true;
+    }
+
+    if (drag.moved) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
 
 }, { passive: false });
 
 el.addEventListener("pointerup", event => {
 
-	if (!activeHeldDiceDrag || activeHeldDiceDrag.el !== el) return;
+    if (!activeHeldDiceDrag || activeHeldDiceDrag.el !== el) return;
 
-	finishHeldDicePointerDrag(event);
-	event.preventDefault();
-	event.stopPropagation();
+    const wasMoved = activeHeldDiceDrag.moved;
+
+    finishHeldDicePointerDrag(event);
+
+    // 이동이 아닌 단순 클릭이라면 즉시 굴린다.
+    if (!wasMoved) {
+        rollDice(el.dataset.dieId);
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
 
 }, { passive: false });
 
 el.addEventListener("pointercancel", event => {
 
-	if (!activeHeldDiceDrag || activeHeldDiceDrag.el !== el) return;
+    if (!activeHeldDiceDrag || activeHeldDiceDrag.el !== el) return;
 
-	const drag = activeHeldDiceDrag;
-	activeHeldDiceDrag = null;
+    const drag = activeHeldDiceDrag;
+    activeHeldDiceDrag = null;
 
-	document.body.classList.remove("dice-pointer-dragging");
-	drag.el.classList.remove("dragging-die");
+    document.body.classList.remove("dice-pointer-dragging");
+    drag.el.classList.remove("dragging-die");
 
-	try {
-		drag.el.releasePointerCapture(drag.pointerId);
-	} catch {}
+    try {
+        drag.el.releasePointerCapture(drag.pointerId);
+    } catch {}
 
-	event.preventDefault();
-	event.stopPropagation();
+    event.preventDefault();
+    event.stopPropagation();
 
 }, { passive: false });
 
