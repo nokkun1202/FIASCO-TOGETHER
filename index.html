@@ -1856,6 +1856,303 @@ width: 62px;
   .multi-mini-btn.copy-invite { display:none; }
 }
 
+
+/* =========================================================
+오른쪽 채팅 사이드바
+========================================================= */
+/* =========================================================
+양쪽 사이드바 전용 토글 탭
+========================================================= */
+.side-toggle {
+position: fixed;
+top: 72px;
+transform: none;
+width: 30px;
+height: 42px;
+border: 1px solid #eadfe7;
+background: rgba(255,250,253,.98);
+color: #766b77;
+box-shadow: 0 4px 14px rgba(80,60,80,.10);
+cursor: pointer;
+z-index: 1950;
+font-size: 24px;
+font-weight: 400;
+line-height: 1;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 0;
+transition: left .2s ease, right .2s ease;
+}
+
+.side-toggle:hover {
+background: #fff;
+color: var(--pink-dark);
+}
+
+.left-side-toggle {
+left: 220px;
+border-left: none;
+border-radius: 0 10px 10px 0;
+}
+
+.right-side-toggle {
+right: 0;
+border-right: none;
+border-radius: 10px 0 0 10px;
+}
+
+.sidebar {
+transition: margin-left .2s ease, transform .2s ease;
+}
+
+.sidebar.sidebar-open {
+margin-left: 0;
+}
+
+@media (min-width: 651px) {
+.sidebar:not(.sidebar-open) {
+margin-left: -220px;
+}
+}
+
+@media (max-width: 1100px) and (min-width: 951px) {
+.sidebar:not(.sidebar-open) {
+margin-left: -220px;
+}
+}
+
+.chat-sidebar {
+
+position: fixed;
+
+top: 62px;
+right: 0;
+bottom: 0;
+
+width: 360px;
+max-width: min(360px, 92vw);
+
+background: rgba(255,250,253,.98);
+border-left: 1px solid #eadfe7;
+box-shadow: -10px 0 30px rgba(80,60,80,.10);
+z-index: 1900;
+display: flex;
+flex-direction: column;
+transform: translateX(100%);
+transition: transform .2s ease;
+overflow: hidden;
+}
+
+.chat-sidebar.open {
+transform: translateX(0);
+}
+
+.chat-sidebar-header {
+height: 58px;
+min-height: 58px;
+padding: 0 14px 0 17px;
+display: flex;
+align-items: center;
+justify-content: flex-end;
+border-bottom: 1px solid #eadfe7;
+}
+
+.chat-sidebar-title {
+font-size: 15px;
+font-weight: 900;
+margin-right: auto;
+}
+
+.chat-sidebar-close {
+display:none !important;
+}
+
+.chat-sidebar-tabs {
+padding: 10px 12px 8px;
+flex-shrink: 0;
+}
+
+.chat-sidebar-log {
+flex: 1;
+min-height: 0;
+overflow-y: auto;
+padding: 12px;
+}
+
+.chat-sidebar-input {
+margin: 10px 12px 12px;
+flex-shrink: 0;
+}
+
+.chat-sidebar-input .chat-character {
+width: 108px;
+}
+
+
+.chat-wrapper {
+display: none !important;
+}
+
+@media (max-width: 1100px) {
+.left-side-toggle { left: 185px; }
+}
+
+@media (max-width: 800px) {
+.left-side-toggle { left: 155px; }
+}
+
+@media (max-width: 650px) {
+.side-toggle {
+width: 28px;
+height: 40px;
+font-size: 22px;
+}
+.left-side-toggle { left: 155px; }
+.chat-sidebar {
+width: min(360px, 100vw);
+}
+.chat-sidebar-input .chat-character {
+width: 84px;
+}
+.sidebar {
+margin-left: 0;
+}
+.sidebar:not(.sidebar-open) {
+transform: translateX(-100%);
+}
+}
+
+.chat-sidebar {
+
+top: 62px;
+right: 0;
+bottom: 0;
+width: 360px;
+max-width: min(360px, 92vw);
+background: rgba(255,250,253,.98);
+border-left: 1px solid #eadfe7;
+box-shadow: -10px 0 30px rgba(80,60,80,.10);
+z-index: 1900;
+display: flex;
+flex-direction: column;
+transform: translateX(100%);
+transition: transform .2s ease;
+overflow: hidden;
+}
+
+.chat-sidebar.open {
+transform: translateX(0);
+}
+
+.chat-sidebar-header {
+height: 58px;
+min-height: 58px;
+padding: 0 14px 0 17px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+border-bottom: 1px solid #eadfe7;
+}
+
+.chat-sidebar-title {
+font-size: 15px;
+font-weight: 900;
+}
+
+.chat-sidebar-close {
+width: 34px;
+height: 34px;
+border: none;
+border-radius: 50%;
+background: #f1e8ee;
+cursor: pointer;
+font-size: 18px;
+line-height: 1;
+}
+
+.chat-sidebar-tabs {
+padding: 10px 12px 8px;
+flex-shrink: 0;
+}
+
+.chat-sidebar-log {
+flex: 1;
+min-height: 0;
+overflow-y: auto;
+padding: 12px;
+}
+
+.chat-sidebar-input {
+margin: 10px 12px 12px;
+flex-shrink: 0;
+}
+
+.chat-sidebar-input .chat-character {
+width: 108px;
+}
+
+
+@media (max-width: 650px) {
+.chat-sidebar {
+width: min(360px, 100vw);
+}
+.chat-sidebar-input .chat-character {
+width: 84px;
+}
+}
+
+/* 왼쪽 플레이세트 사이드바 접기/열기 */
+.sidebar {
+transition: margin-left .2s ease, transform .2s ease;
+}
+.sidebar.sidebar-open {
+margin-left: 0;
+}
+@media (min-width: 651px) {
+.sidebar:not(.sidebar-open) {
+margin-left: -220px;
+}
+}
+@media (max-width: 1100px) and (min-width: 951px) {
+.sidebar:not(.sidebar-open) {
+margin-left: -220px;
+}
+}
+
+/* 오른쪽 채팅 사이드바 사용 시 기존 하단 채팅 UI는 사용하지 않는다. */
+.chat-wrapper {
+display: none !important;
+}
+
+
+/* 토글 상태 보정 */
+@media (min-width: 651px) {
+.sidebar {
+margin-left: 0;
+}
+.sidebar:not(.sidebar-open) {
+margin-left: -220px;
+}
+}
+
+@media (max-width: 650px) {
+.sidebar {
+margin-left: 0;
+}
+.sidebar:not(.sidebar-open) {
+transform: translateX(-100%);
+}
+}
+
+@media (max-width: 650px) {
+.side-toggle {
+width: 28px;
+height: 68px;
+font-size: 23px;
+}
+}
+
 </style>
 
 </head>
@@ -1877,17 +2174,7 @@ PLAY TABLE
 
 </div>
 
-<div class="top-right">
 
-<button
-class="round-btn"
-onclick="toggleSidebar()">
-
-☰
-
-</button>
-
-</div>
 
 </header>
 
@@ -1896,13 +2183,33 @@ onclick="toggleSidebar()">
     <span class="multi-dot"></span>
     <span id="multiStatusText">로컬</span>
   </div>
-  <select class="multi-character-select" id="myCharacterSelect" onchange="selectMyCharacter(this.value)" title="내가 사용할 캐릭터">
-    <option value="">내 캐릭터 선택</option>
-  </select>
   <button class="multi-mini-btn" id="multiCreateBtn" onclick="createMultiRoom()">방 만들기</button>
   <button class="multi-mini-btn" id="multiJoinBtn" onclick="joinMultiRoom()">코드 접속</button>
   <button class="multi-mini-btn copy-invite" id="multiCopyBtn" onclick="copyInviteLink()" style="display:none;">초대 복사</button>
 </div>
+
+<!-- =====================================================
+사이드바 여닫기 버튼
+===================================================== -->
+<button
+class="side-toggle left-side-toggle"
+id="leftSidebarToggle"
+type="button"
+onclick="toggleSidebar()"
+title="플레이세트 사이드바 열기/닫기"
+aria-label="플레이세트 사이드바 열기/닫기">
+<span id="leftSidebarToggleIcon">‹</span>
+</button>
+
+<button
+class="side-toggle right-side-toggle"
+id="rightChatToggle"
+type="button"
+onclick="toggleChatSidebar()"
+title="채팅 사이드바 열기/닫기"
+aria-label="채팅 사이드바 열기/닫기">
+<span id="rightChatToggleIcon">›</span>
+</button>
 
 <!-- =====================================================
 메인
@@ -2142,124 +2449,63 @@ onclick="rollAllDice()">
 </main>
 
 <!-- =====================================================
-채팅
+오른쪽 채팅 사이드바
 ===================================================== -->
 
-<div class="chat-wrapper">
+<aside
+class="chat-sidebar"
+id="chatSidebar">
 
-<div
-class="chat-preview"
-id="chatPreview">
+<div class="chat-sidebar-header">
+  <div class="chat-sidebar-title">💬 채팅</div>
 </div>
 
-<button
-class="chat-all-button"
-onclick="openChatModal()">
+<!-- 상단 잡담/플레이 탭이 유일한 채팅 종류 선택기 -->
+<div class="chat-tabs chat-sidebar-tabs">
+  <button
+  class="chat-tab active"
+  id="logTalkTab"
+  onclick="changeLogTab('talk')">
+  잡담
+  </button>
 
-전체보기
+  <button
+  class="chat-tab"
+  id="logPlayTab"
+  onclick="changeLogTab('play')">
+  플레이
+  </button>
+</div>
 
-</button>
+<div
+class="chat-log chat-sidebar-log"
+id="chatLog">
+</div>
 
-<div class="chat-input-box">
-
-<select
-class="chat-type"
-id="chatType">
-
-<option value="talk">
-잡담
-</option>
-
-<option value="play">
-플레이
-</option>
-
-</select>
+<div class="chat-input-box chat-sidebar-input">
 
 <select
 class="chat-character"
 id="chatCharacter">
 </select>
 
+
 <input
 id="chatInput"
 class="chat-text"
 type="text"
 placeholder="메시지를 입력하세요..."
-onkeydown="chatKeyDown(event)"
+onkeydown="chatKeyDown(event)">
 
 <button
 class="chat-send"
 onclick="sendChat()">
-
 ↑
-
 </button>
 
 </div>
 
-</div>
-
-<!-- =====================================================
-채팅 모달
-===================================================== -->
-
-<div
-class="chat-modal"
-id="chatModal">
-
-<div class="chat-window">
-
-<div class="chat-window-header">
-
-<div class="chat-window-title">
-
-💬 채팅 로그
-
-</div>
-
-<div class="chat-tabs">
-
-<button
-class="chat-tab active"
-id="logTalkTab"
-onclick="changeLogTab('talk')">
-
-잡담
-
-</button>
-
-<button
-class="chat-tab"
-id="logPlayTab"
-onclick="changeLogTab('play')">
-
-플레이
-
-</button>
-
-</div>
-
-<button
-class="close-chat"
-onclick="closeChatModal()">
-
-×
-
-</button>
-
-</div>
-
-<div
-class="chat-log"
-id="chatLog">
-</div>
-
-</div>
-
-</div>
-
-</div>
+</aside>
 
 <script src="https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js"></script>
 
@@ -5142,10 +5388,15 @@ input.value.trim();
 
 if (!text) return;
 
-const type =
+const typeSelect =
 document.getElementById(
 "chatType"
-).value;
+);
+
+const type =
+typeSelect
+? typeSelect.value
+: currentLogTab;
 
 const selected =
 document.getElementById(
@@ -5237,7 +5488,9 @@ input.value =
 
 saveState();
 
+/* 로컬에서 보낸 메시지는 탭을 다시 눌러야 보이는 일이 없도록 즉시 렌더링 */
 renderChatPreview();
+renderChatLog();
 
 }
 
@@ -5342,6 +5595,24 @@ type === "play"
 
 renderChatLog();
 
+const chatType = document.getElementById("chatType");
+if (chatType) chatType.value = type;
+
+const chatInput =
+document.getElementById(
+"chatInput"
+);
+
+if (chatInput) {
+
+setTimeout(() => {
+
+chatInput.focus();
+
+}, 0);
+
+}
+
 }
 
 /* =========================================================
@@ -5353,6 +5624,10 @@ function renderChatLog() {
 const room = getCurrentRoom();
 const log = document.getElementById("chatLog");
 if (!room || !log) return;
+
+if (currentLogTab !== "talk" && currentLogTab !== "play") {
+currentLogTab = "talk";
+}
 
 log.innerHTML = "";
 const messages = room.chats.filter(chat => chat.type === currentLogTab);
@@ -5379,17 +5654,69 @@ log.scrollTop = log.scrollHeight;
 사이드바
 ========================================================= */
 
-function toggleSidebar() {
+function positionSideToggleButtons() {
 
-document
-.getElementById(
-"sidebar"
-)
-.classList.toggle(
-"mobile-open"
-);
+const sidebar = document.getElementById("sidebar");
+const leftToggle = document.getElementById("leftSidebarToggle");
+
+if (sidebar && leftToggle) {
+const rect = sidebar.getBoundingClientRect();
+const edge = Math.max(0, Math.round(rect.right));
+leftToggle.style.left = edge + "px";
+}
+
+const chatSidebar = document.getElementById("chatSidebar");
+const rightToggle = document.getElementById("rightChatToggle");
+
+if (chatSidebar && rightToggle) {
+const isOpen = chatSidebar.classList.contains("open");
+const rect = chatSidebar.getBoundingClientRect();
+const edge = isOpen ? Math.max(0, Math.round(window.innerWidth - rect.left)) : 0;
+rightToggle.style.right = edge + "px";
+}
 
 }
+
+function updateSidebarToggleUI() {
+
+const sidebar = document.getElementById("sidebar");
+const leftIcon = document.getElementById("leftSidebarToggleIcon");
+if (sidebar && leftIcon) {
+leftIcon.textContent = sidebar.classList.contains("sidebar-open") ? "‹" : "›";
+}
+
+const chatSidebar = document.getElementById("chatSidebar");
+const rightIcon = document.getElementById("rightChatToggleIcon");
+if (chatSidebar && rightIcon) {
+rightIcon.textContent = chatSidebar.classList.contains("open") ? "›" : "‹";
+}
+
+positionSideToggleButtons();
+
+}
+
+function toggleSidebar() {
+
+const sidebar = document.getElementById("sidebar");
+if (!sidebar) return;
+sidebar.classList.toggle("sidebar-open");
+updateSidebarToggleUI();
+
+}
+
+function toggleChatSidebar() {
+
+const sidebar = document.getElementById("chatSidebar");
+if (!sidebar) return;
+sidebar.classList.toggle("open");
+if (sidebar.classList.contains("open")) {
+renderChatLog();
+}
+updateSidebarToggleUI();
+
+}
+
+window.addEventListener("resize", positionSideToggleButtons);
 
 /* =========================================================
 HTML 보안
@@ -5473,9 +5800,13 @@ renderOrbit();
 
 updateChatCharacterList();
 
-refreshMyCharacterSelect();
-
 renderChatPreview();
+
+/* 상태가 갱신될 때 열려 있는 채팅 사이드바도 즉시 다시 그린다. */
+const chatSidebarEl = document.getElementById("chatSidebar");
+if (chatSidebarEl && chatSidebarEl.classList.contains("open")) {
+renderChatLog();
+}
 
 setupDiceTableDragging();
 
@@ -5950,6 +6281,9 @@ startMultiGuest(code);
 initializeState();
 
 renderAll();
+document.getElementById("sidebar")?.classList.add("sidebar-open");
+document.getElementById("chatSidebar")?.classList.remove("open");
+updateSidebarToggleUI();
 
 setTimeout(autoStartMultiplayer, 0);
 
